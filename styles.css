@@ -85,6 +85,9 @@ button {
   background-color: #ddd;
   color: #111;
   width: 60%;
+  
+   -webkit-tap-highlight-color: transparent;
+  outline: none;
 
   transition: background-color 0.4s ease;
 }
