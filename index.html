@@ -22,6 +22,7 @@
   <div id="inputArea">
     <input type="text" id="dateInput" placeholder="MMDD">
     <button onclick="showFlower()">확인</button>
+<button id="backBtn" onclick="goBack()" style="display: none;">돌아가기</button>
   </div>
 
   <script>
@@ -60,9 +61,30 @@ function showFlower() {
     desc.textContent = "해당 날짜의 꽃 설명이 없습니다.";
     msg.style.display = 'none';
   }
+        // 입력창/확인 버튼 숨기고 돌아가기 버튼 표시
+  document.getElementById('dateInput').style.display = 'none';
+  confirmBtn.style.display = 'none';
+  backBtn.style.display = 'block';
+
 }
 
+    function goBack() {
+  const img = document.getElementById('flowerImage');
+  const desc = document.getElementById('flowerDesc');
+  const msg = document.getElementById('message');
+  const confirmBtn = document.getElementById('confirmBtn');
+  const backBtn = document.getElementById('backBtn');
 
+  // 초기화
+  document.getElementById('dateInput').value = '';
+  document.getElementById('dateInput').style.display = 'block';
+  confirmBtn.style.display = 'block';
+  backBtn.style.display = 'none';
+
+  img.style.display = 'none';
+  desc.textContent = '';
+  msg.style.display = 'block';
+}
 
 	  
   </script>
@@ -72,6 +94,7 @@ function showFlower() {
 </body>
 
 </html>
+
 
 
 
