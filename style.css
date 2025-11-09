@@ -1,0 +1,76 @@
+body {
+      margin: 0;
+      font-family: sans-serif;
+      background-color: #f0f4f8;
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+
+
+      font-family: "sandoll-myeongjoneo1", sans-serif;
+      font-weight: 400;
+      font-style: normal;
+
+    }
+
+    #message {
+      font-size: 1.5em;
+      color: #555;
+      margin-bottom: 20px;
+    }
+
+    #flowerImage {
+      max-width: 300px;
+      margin-top: 20px;
+      display: none;
+    }
+
+    #flowerDesc {
+      margin-top: 10px;
+      font-size: 1.2em;
+      color: #333;
+      text-align: center;
+    }
+
+
+
+    #inputArea {
+      position: absolute;
+      bottom: 130px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    input[type="text"] {
+      padding: 8px;
+      font-size: 1em;
+      border-radius: 20px;
+      border-style: none;
+      width: 140px;
+
+      
+
+      text-align: center;
+    }
+
+    button {
+      padding: 8px 12px;
+
+      font-size: 1em;
+      border-radius: 20px;
+      border-style: none;
+
+      cursor: pointer;
+
+      background-color: #333;
+      color: #fff;
+
+
+
+    }
