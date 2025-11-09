@@ -27,33 +27,24 @@
   <script>
     let flowerText = {};
 
-    // 텍스트 JSON 불러오기
-    fetch('flowertext.json')
+    // JSON 불러오기
+    fetch('flowerText.json')
       .then(res => res.json())
       .then(data => flowerText = data)
       .catch(() => {
         document.getElementById('message').textContent = "텍스트 데이터를 불러올 수 없습니다.";
       });
 
-
-
     function showFlower() {
       const input = document.getElementById('dateInput').value.trim();
-      const img = document.getElementById('flowerImage');
       const desc = document.getElementById('flowerDesc');
       const msg = document.getElementById('message');
 
       if (!/^\d{4}$/.test(input)) {
         desc.textContent = "날짜 형식이 올바르지 않습니다. 예: 0103";
-        img.style.display = 'none';
         return;
       }
 
-      // 이미지 경로 자동 생성
-      img.src = `img/${input}.jpg`;
-      img.style.display = 'block';
-
-      // 텍스트 가져오기
       const text = flowerText[input];
       if (text) {
         desc.textContent = text;
@@ -70,6 +61,7 @@
 </body>
 
 </html>
+
 
 
 
