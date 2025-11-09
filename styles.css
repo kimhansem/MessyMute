@@ -1,8 +1,5 @@
 body {
   margin: 0;
-  font-family: "sandoll-myeongjoneo1", sans-serif;
-  font-weight: 400;
-  font-style: normal;
   background-color: #f0f4f8;
   display: flex;
   flex-direction: column;
@@ -23,57 +20,123 @@ body {
 
 #flowerImage {
   width: 100%;
- 
-  margin-top: 16px;
   display: none;
- 
+  margin-top: -160px;
 }
 
 #flowerDesc {
-  margin-top: 12px;
-  font-size: 0.8rem;
+  margin-top: 32px;
+  font-size: 1rem;
   color: #333;
   text-align: center;
-  line-height: 1.5;
+  letter-spacing: -1px;
+  line-height: 1.8;
   word-break: keep-all;
+
+  max-height: 200px; /* 원하는 높이로 제한 */
+  overflow-y: auto;  /* 세로 스크롤 가능하게 */
+  padding: 8px;
+
+  -webkit-mask-image: linear-gradient(to bottom, black 60%, transparent 100%);
+  mask-image: linear-gradient(to bottom, black 60%, transparent 100%);
 }
+
 
 #inputArea {
   position: fixed;
-  bottom: 40px;
+  box-sizing: border-box;
+  bottom: 60px;
   left: 50%;
   transform: translateX(-50%);
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  align-items: center;
+
+  gap: 20px;
   width: 100%;
-  max-width: 280px;
-  padding: 0 16px;
+  max-width: 240px;
+  
 }
 
 input[type="text"] {
   padding: 12px;
-  font-size: 1rem;
-  border-radius: 24px;
+  font-size: 3rem;
+  border-radius: 44px;
   border: none;
-  width: 100%;
+  width: 90%;
   text-align: center;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  letter-spacing : 0.1em;
+
+  color: #444;
+ 
+}
+
+.custom-input::placeholder {
+  color: #ddd; /* placeholder 텍스트 색상 */
+  opacity: 1; /* 일부 브라우저에서 흐리게 보이는 것 방지 */
 }
 
 button {
-  padding: 12px;
-  font-size: 1rem;
-  border-radius: 24px;
+  padding: 16px;
+  font-size: 1.4rem;
+  border-radius: 44px;
   border: none;
   cursor: pointer;
-  background-color: #333;
-  color: #fff;
-  width: 100%;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.15);
-  transition: background-color 0.2s ease;
+  background-color: #ddd;
+  color: #111;
+  width: 60%;
+
+  transition: background-color 0.4s ease;
 }
 
 button:active {
-  background-color: #555;
+  background-color: #bbb;
+
+}
+
+
+
+/* 애니메이션 */
+.fade-in {
+  animation: fadeIn 1s ease forwards;
+}
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.fade-out {
+  animation: fadeOut 0.5s ease forwards;
+}
+@keyframes fadeOut {
+  from { opacity: 1; }
+  to { opacity: 0; }
+}
+
+.slide-up {
+  animation: slideUp 1s ease forwards;
+}
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.slide-down {
+  animation: slideDown 0.5s ease forwards;
+}
+@keyframes slideDown {
+  from {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(20px);
+  }
 }
