@@ -26,7 +26,7 @@ body {
  
 
   margin: 0;
-  padding: 20px;
+  padding: 0px;
   text-align: center;
   background-color: #111; 
 }
@@ -60,7 +60,23 @@ body.gallery-bg {
 /* 상세페이지 전용 폰트 */
 #detailPage {
   color: #111a;
+  display: flex;
+  flex-direction: column;
+  align-items: center;   /* 가로 중앙 */
+  justify-content: center;
+  padding: 0;         /* 부모 안쪽 여백 */
+
 }
+
+#detailPage button {
+  display: block;
+  margin: 20px auto;  /* 좌우 자동 → 중앙 */
+  width: auto;
+  background-color: #111;
+  color: #eee;
+      /* 버튼이 부모 폭을 다 차지하지 않도록 */
+}
+
 
 /* 모두보기 썸네일 페이지 전용 폰트 */
 #galleryPage {
@@ -102,7 +118,7 @@ body.gallery-bg {
 /* 공통 버튼 스타일 */
 button {
   padding: 8px 14px;
-  margin: 5px;
+  margin-top: 25px;
   cursor: pointer;
   border: none;
   border-radius: 6px;
@@ -120,7 +136,9 @@ button:hover {
 
 
 
-
+#flowerImage {
+  width: clamp(400px, 40%, 450px);
+}
 
 /* 제목/본문/맺음말 */
 #flowerTitle {
@@ -143,25 +161,16 @@ button:hover {
   margin-top: 12px;
 }
 
-#flowerImage {
-  display: block;
-  margin: 0 auto;         /* 가로 중앙 정렬 */
-  position: relative;
-}
 
-/* 🖥️상세페이지 이미지 //  PC 환경 (768px 이상) */
-@media (min-width: 769px) {
-  #flowerImage {
-    width: 50%;           
-    max-width: 50%;       
-    margin-top: 5vh;      
-  }
-}
+
+
+
 
 
 
 /* 썸네일 그리드 기본 (PC 기준) */
 .gallery-grid {
+  margin-top: 160px;
   margin-left: 80px;
   margin-right: 80px;
   display: flex;
@@ -184,12 +193,22 @@ button:hover {
 }
 
 
+
 /* 메인페이지 버튼 항상 고정 */
 #galleryPage .main-btn {
   position: fixed;
-  top: 15px;
-  right: 15px;
+  top: 10px;
+  transform: translateX(-50%);
+  left: 50%;
   z-index: 1000;
+  width: clamp(130px, 30%, 200px);
+  
+  border-radius:20px;
+  
+  background-color: #111;
+  color: #eee;
+  
+  
 }
 
 
@@ -206,8 +225,15 @@ button:hover {
   #flowerImage {
     width: 100%;          /* 화면 너비 꽉 채우기 */
     max-width: 100%;
-    margin-top: 0;        /* 위쪽 여백 제거 */
+    margin: 0;        /* 위쪽 여백 제거 */
   }
+
+  #detailPage button {
+    width: auto;
+  }
+
+
+
 
 .gallery-grid {
   margin-left: 0px;
@@ -215,9 +241,8 @@ button:hover {
 }
 
   .gallery-grid img {
-    width: calc(100% / 4 - 8px);
+    width: calc(100% / 3 - 8px);
   }
-
 
 
   .custom-input {
@@ -229,7 +254,6 @@ button:hover {
   button {
     width: 90%;
     font-size: 1em;
-    margin: 8px auto;
     display: block;
   }
 
@@ -257,22 +281,3 @@ button:hover {
 }
 
 
-
-/* 모바일 480px 이하 - 3열 */
-@media (max-width: 480px) {
-  .gallery-grid img {
-    width: calc(100% / 3 - 8px);
-  }
-
-  #flowerTitle {
-    font-size: 1.1em;
-  }
-
-  #flowerBody {
-    font-size: 0.9em;
-  }
-
-  #flowerClosing {
-    font-size: 0.85em;
-  }
-}
