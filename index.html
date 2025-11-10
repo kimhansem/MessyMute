@@ -2,101 +2,128 @@
 <html lang="ko">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>霧園</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>무원</title>
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+  <!-- 메인 -->
+  <div id="mainPage">
+    <div id="message">당신의 탄생화는 무엇인가요?</div>
+    <input type="text" id="dateInput" placeholder="생일을 입력해주세요 ex) 0123" class="custom-input">
+    
+      <svg id="confirmBtn" xmlns="http://www.w3.org/2000/svg" 
+       viewBox="0 0 33.55 32.6" width="40" height="40" style="cursor:pointer;">
+    <defs>
+      <style>
+        .cls-1 { fill: #ddd; } /* 버튼 색상 변경 */
+      </style>
+    </defs>
+    <g>
+      <path class="cls-1" d="M5.86,5.58v21.43h21.82V5.58H5.86ZM25.29,24.6H8.26V7.98h17.02v16.62Z"/>
+      <rect class="cls-1" x="31.15" y="3.17" width="2.4" height="26.22"/>
+      <rect class="cls-1" y="3.17" width="2.4" height="26.22"/>
+      <rect class="cls-1" x="3.28" y="30.3" width="27" height="2.3"/>
+      <rect class="cls-1" x="3.28" width="27" height="2.3"/>
+    </g>
+  </svg>
 
-  <div id="message">🌼 날짜를 입력하세요 (예: 0103)</div>
-  <img id="flowerImage" src="">
-  <p id="flowerDesc"></p>
-
-  <div id="inputArea">
-    <input type="text" id="dateInput" placeholder="MMDD" class="custom-input">
-    <button id="confirmBtn" onclick="showFlower()">확인하기</button>
-    <button id="backBtn" onclick="goBack()" style="display: none;">돌아가기</button>
+    
+    
+    
   </div>
 
+  <!-- 상세 -->
+  <div id="detailPage" style="display:none;">
+    <img id="flowerImage" src="">
+    <h2 id="flowerTitle"></h2>
+    <p id="flowerBody"></p>
+    <p id="flowerClosing"></p>
+    <button onclick="showGallery()">see all</button>
+  </div>
+
+  <!-- 모두보기 -->
+  <div id="galleryPage" style="display:none;">
+    <button class="main-btn" onclick="goMain()">main</button>
+    <div class="gallery-grid" id="galleryGrid"></div>
+  </div>
+
+
+
   <script>
-    const flowerText = {
+    let flowerData = [];
 
-      "0101": 
-      "스노드롭의 꽃말은 '희망'입니다.아담과 이브가 절망속에서 찾은 꽃인만큼 꽃말도 '희망'이네요. 새해가 시작되는 날과도 어울리는 꽃말인 것 같습니다. 나아질 것이라는 희망이 있다면 고통의 순간도 과정으로 여기고 해나갈 힘이 생기는 것 같습니다. 소소한 희망에도 스스로 가치를 부여하고 큰것으로 여긴다면 올해가 끝나갈 때 쯤엔 좋은 결과가 있지 않을까요? 스노드롭의 꽃말은 '희망'입니다.아담과 이브가 절망속에서 찾은 꽃인만큼 꽃말도 '희망'이네요. 새해가 시작되는 날과도 어울리는 꽃말인 것 같습니다. 나아질 것이라는 희망이 있다면 고통의 순간도 과정으로 여기고 해나갈 힘이 생기는 것 같습니다. 소소한 희망에도 스스로 가치를 부여하고 큰것으로 여긴다면 올해가 끝나갈 때 쯤엔 좋은 결과가 있지 않을까요?"
-      ,
-      "0102": 
-      "노랑수선화의 꽃말은 '사랑에 답하여'입니다.호수에 비친 자신의 모습을 사랑한 나르키소스는 결국 사랑에 답을 듣지 못하여 죽고 말았는데요, 모든 인간 관계가 마찬가지로 사랑에도 소통이 가장 중요한 것 같습니다. 사랑하는 마음을 표현하고 그 사랑에 답하여 주는것이 서로간의 예의이지 않을까요? (물론 비뚤어진 사랑은 제외)"
-      
-      // 추가
+    // JSON 불러오기
+    fetch('flowers.json')
+      .then(response => response.json())
+      .then(data => {
+        flowerData = data;
+      });
 
-    };
 
-    function showFlower() {
-      const input = document.getElementById('dateInput').value.trim();
-      const img = document.getElementById('flowerImage');
-      const desc = document.getElementById('flowerDesc');
-      const msg = document.getElementById('message');
-      const confirmBtn = document.getElementById('confirmBtn');
-      const backBtn = document.getElementById('backBtn');
+   document.getElementById('confirmBtn').addEventListener('click', () => showFlower());
 
+
+
+    function showFlower(date) {
+      const input = date || document.getElementById('dateInput').value.trim();
       if (!/^\d{4}$/.test(input)) {
-        desc.textContent = "날짜 형식이 올바르지 않습니다. 예: 0103";
-        img.style.display = 'none';
+        alert("날짜 형식이 올바르지 않습니다. 예: 0103");
         return;
       }
 
-      // 이미지 설정
-      img.classList.remove('fade-in', 'fade-out');
-      void img.offsetWidth;
+      const data = flowerData.find(f => f.date === input);
+
+      document.getElementById('mainPage').style.display = 'none';
+      document.getElementById('galleryPage').style.display = 'none';
+      document.getElementById('detailPage').style.display = 'block';
+      document.body.className = 'detail-bg';
+
+
+      const img = document.getElementById('flowerImage');
+      const title = document.getElementById('flowerTitle');
+      const body = document.getElementById('flowerBody');
+      const closing = document.getElementById('flowerClosing');
+
       img.src = `img/${input}.jpg`;
-      img.style.display = 'block';
-      img.classList.add('fade-in');
-      img.onerror = () => {
-        img.style.display = 'none';
-      };
 
-      // 텍스트 설정
-      desc.classList.remove('slide-up', 'slide-down');
-      void desc.offsetWidth;
-      const text = flowerText[input];
-      desc.textContent = text ? text : "해당 날짜의 꽃 설명이 없습니다.";
-      desc.classList.add('slide-up');
-      msg.style.display = 'none';
-
-      // 버튼 전환
-      document.getElementById('dateInput').style.display = 'none';
-      confirmBtn.style.display = 'none';
-      backBtn.style.display = 'block';
+      if (data) {
+        title.textContent = data.title;
+        body.textContent = data.body;
+        closing.textContent = data.closing;
+      } else {
+        title.textContent = "해당 날짜의 꽃 설명이 없습니다.";
+        body.textContent = "";
+        closing.textContent = "";
+      }
     }
 
-    function goBack() {
-      const img = document.getElementById('flowerImage');
-      const desc = document.getElementById('flowerDesc');
-      const msg = document.getElementById('message');
-      const confirmBtn = document.getElementById('confirmBtn');
-      const backBtn = document.getElementById('backBtn');
-      const input = document.getElementById('dateInput');
+    function showGallery() {
+      document.getElementById('detailPage').style.display = 'none';
+      document.getElementById('galleryPage').style.display = 'block';
+      document.body.className = 'gallery-bg';
 
-      // 애니메이션 제거 후 사라짐 효과
-      img.classList.remove('fade-in');
-      desc.classList.remove('slide-up');
-      void img.offsetWidth;
-      void desc.offsetWidth;
-      img.classList.add('fade-out');
-      desc.classList.add('slide-down');
 
-      setTimeout(() => {
-        img.style.display = 'none';
-        desc.textContent = '';
-        img.classList.remove('fade-out');
-        desc.classList.remove('slide-down');
+      const grid = document.getElementById('galleryGrid');
+      grid.innerHTML = '';
 
-        input.value = '';
-        input.style.display = 'block';
-        confirmBtn.style.display = 'block';
-        backBtn.style.display = 'none';
-        msg.style.display = 'block';
-      }, 500);
+      flowerData.forEach(f => {
+        const thumb = document.createElement('img');
+        thumb.src = `img/${f.date}.jpg`;
+        thumb.alt = f.date;
+        thumb.onclick = () => showFlower(f.date);
+        grid.appendChild(thumb);
+      });
+    }
+
+    function goMain() {
+   document.getElementById('detailPage').style.display = 'none';
+  document.getElementById('galleryPage').style.display = 'none';
+  document.getElementById('mainPage').style.display = ''; // 인라인 스타일 제거
+  document.body.className = 'main-bg';
+document.getElementById('dateInput').value = '';
+
+
     }
   </script>
 </body>
