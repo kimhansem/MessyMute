@@ -1,145 +1,278 @@
-body {
-  margin: 0;
-  background-color: #f0f4f8;
-  display: flex;
-  flex-direction: column;
-  height: 100dvh;
-  justify-content: center;
-  align-items: center;
-  padding: 0 16px;
-  box-sizing: border-box;
+/* OCRBStd.otf 불러오기 */
+@font-face {
+  font-family: 'Tasan Regular';
+  src: url('fonts/Tasan Regular.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'SourceSansPro-Regular.otf';
+  src: url('fonts/SourceSansPro-Regular.otf.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'SourceSansPro-Bold.otf';
+  src: url('fonts/SourceSansPro-Bold.otf.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
 }
 
-#message {
-  font-size: 1.2rem;
-  color: #555;
-  margin-bottom: 16px;
+
+
+
+
+body {
+ 
+
+  margin: 0;
+  padding: 20px;
   text-align: center;
-  line-height: 1.4;
+  background-color: #111; 
+}
+
+body.main-bg { 
+  background-color: #111; 
+  }
+body.detail-bg { 
+  background-color: #fff; 
+  }
+body.gallery-bg { 
+  background-color: #111; 
+  }
+
+
+/* 메인페이지 전용 폰트 */
+#mainPage {  
+  display: flex;
+  flex-direction: column;   /* 세로 배치 */
+  align-items: center;      /* 가로 중앙 정렬 */
+  justify-content: center;  /* 세로 중앙 정렬 (원하면) */
+  gap: 40px;                /* 요소 간 간격 */
+  min-height: 100vh;        /* 화면 전체 높이 채우기 */
+  
+}
+
+   
+   
+
+
+/* 상세페이지 전용 폰트 */
+#detailPage {
+  color: #111a;
+}
+
+/* 모두보기 썸네일 페이지 전용 폰트 */
+#galleryPage {
+  color: #eee;
+}
+
+
+
+#message {
+  font-family: 'Tasan Regular', sans-serif;
+  font-size: clamp(16px, 4vw, 32px);
+
+  color: #eee;
+}
+
+#dateInput {
+  padding: 20px 30px;
+  border-radius: 10px;
+  
+  font-family: 'Tasan Regular', sans-serif;
+  text-align: center;
+  font-size: clamp(16px, 4vw, 32px);
+  color: #111;
+}
+
+#dateInput::placeholder {
+  color: #bbb;              /* 플레이스홀더 글자 색상 */
+  font-family: 'Tasan Regular', sans-serif;
+  font-size: clamp(16px, 4vw, 32px);
+}
+
+
+
+#confirmBtn:hover .cls-1 {
+  fill: #fff; /* hover 시 색상 변경 */
+}
+
+
+/* 공통 버튼 스타일 */
+button {
+  padding: 8px 14px;
+  margin: 5px;
+  cursor: pointer;
+  border: none;
+  border-radius: 6px;
+  background: #4a90e2;
+  color: white;
+  font-size: 0.9em;
+  font-family: 'Tasan Regular', sans-serif;
+  
+}
+
+button:hover {
+  background: #357ab8;
+}
+
+
+
+
+
+
+/* 제목/본문/맺음말 */
+#flowerTitle {
+  font-size: 1.5em;
+  font-weight: bold;
+  color: #2a4d69;
+  margin-top: 15px;
+}
+
+#flowerBody {
+  font-size: 1em;
+  line-height: 1.6;
+  color: #333;
+  margin-top: 10px;
+}
+
+#flowerClosing {
+  font-style: italic;
+  color: #666;
+  margin-top: 12px;
 }
 
 #flowerImage {
-  width: 100%;
-  display: none;
-  margin-top: 0px;
+  display: block;
+  margin: 0 auto;         /* 가로 중앙 정렬 */
+  position: relative;
 }
 
-#flowerDesc {
-  margin-top: 20px;
-  font-size: 1rem;
-  color: #333;
-  text-align: center;
-  letter-spacing: -1px;
-  line-height: 1.8;
-  word-break: keep-all;
-
-  max-height: 200px; /* 원하는 높이로 제한 */
-  overflow-y: auto;  /* 세로 스크롤 가능하게 */
-  padding: 8px;
-
-  -webkit-mask-image: linear-gradient(to bottom, black 60%, transparent 100%);
-  mask-image: linear-gradient(to bottom, black 60%, transparent 100%);
+/* 🖥️상세페이지 이미지 //  PC 환경 (768px 이상) */
+@media (min-width: 769px) {
+  #flowerImage {
+    width: 50%;           
+    max-width: 50%;       
+    margin-top: 5vh;      
+  }
 }
 
 
-#inputArea {
-  position: fixed;
-  box-sizing: border-box;
-  bottom: 30px;
-  left: 50%;
-  transform: translateX(-50%);
+
+/* 썸네일 그리드 기본 (PC 기준) */
+.gallery-grid {
+  margin-left: 80px;
+  margin-right: 80px;
   display: flex;
-  flex-direction: column;
-  align-items: center;
-
-  gap: 20px;
-  width: 100%;
-  max-width: 240px;
-  
+  flex-wrap: wrap;
+  gap: 12px;
+  justify-content: center;
 }
 
-input[type="text"] {
-  padding: 12px;
-  font-size: 3rem;
-  border-radius: 44px;
-  border: none;
-  width: 90%;
-  text-align: center;
-  /* letter-spacing: 0.1em; */
 
-  color: #444;
- 
-}
 
-.custom-input::placeholder {
-  color: #ddd; /* placeholder 텍스트 색상 */
-  opacity: 1; /* 일부 브라우저에서 흐리게 보이는 것 방지 */
-}
-
-button {
-  padding: 16px;
-  font-size: 1.2rem;
-  border-radius: 44px;
-  border: none;
+/* PC: 5열 */
+.gallery-grid img {
+  width: calc(100% / 5 - 12px);
   cursor: pointer;
-  background-color: #ddd;
-  color: #111;
-  width: 60%;
-  
-   -webkit-tap-highlight-color: transparent;
-  outline: none;
-
-  transition: background-color 0.4s ease;
+  transition: transform 0.2s;
 }
 
-button:active {
-  background-color: #bbb;
-
+.gallery-grid img:hover {
+  transform: scale(1.05);
 }
 
 
-
-/* 애니메이션 */
-.fade-in {
-  animation: fadeIn 1s ease forwards;
-}
-@keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
+/* 메인페이지 버튼 항상 고정 */
+#galleryPage .main-btn {
+  position: fixed;
+  top: 15px;
+  right: 15px;
+  z-index: 1000;
 }
 
-.fade-out {
-  animation: fadeOut 0.5s ease forwards;
-}
-@keyframes fadeOut {
-  from { opacity: 1; }
-  to { opacity: 0; }
-}
 
-.slide-up {
-  animation: slideUp 1s ease forwards;
-}
-@keyframes slideUp {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
+
+
+
+/* 모바일 768px 이하 - 4열*/
+@media (max-width: 768px) {
+  body {
+    margin: 10px;
+    padding: 10px;
   }
-  to {
-    opacity: 1;
-    transform: translateY(0);
+
+  #flowerImage {
+    width: 100%;          /* 화면 너비 꽉 채우기 */
+    max-width: 100%;
+    margin-top: 0;        /* 위쪽 여백 제거 */
+  }
+
+.gallery-grid {
+  margin-left: 0px;
+  margin-right: 0px;
+}
+
+  .gallery-grid img {
+    width: calc(100% / 4 - 8px);
+  }
+
+
+
+  .custom-input {
+    width: 90%;
+    font-size: 1em;
+  }
+
+
+  button {
+    width: 90%;
+    font-size: 1em;
+    margin: 8px auto;
+    display: block;
+  }
+
+
+  #flowerTitle {
+    font-size: 1.2em;
+  }
+
+  #flowerBody {
+    font-size: 0.95em;
+  }
+
+  #flowerClosing {
+    font-size: 0.9em;
+  }
+
+
+  /* 메인페이지 버튼 모바일에서 상단 중앙 */
+  #galleryPage .main-btn {
+    right: auto;
+    left: 50%;
+    transform: translateX(-50%);
+    top: 10px;
   }
 }
 
-.slide-down {
-  animation: slideDown 0.5s ease forwards;
-}
-@keyframes slideDown {
-  from {
-    opacity: 1;
-    transform: translateY(0);
+
+
+/* 모바일 480px 이하 - 3열 */
+@media (max-width: 480px) {
+  .gallery-grid img {
+    width: calc(100% / 3 - 8px);
   }
-  to {
-    opacity: 0;
-    transform: translateY(20px);
+
+  #flowerTitle {
+    font-size: 1.1em;
+  }
+
+  #flowerBody {
+    font-size: 0.9em;
+  }
+
+  #flowerClosing {
+    font-size: 0.85em;
   }
 }
