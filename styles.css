@@ -175,7 +175,7 @@ button:hover {
   margin-right: 80px;
   display: flex;
   flex-wrap: wrap;
-  gap: 12px;
+  gap: 4px;
   justify-content: center;
 }
 
