@@ -21,7 +21,7 @@ body {
 #flowerImage {
   width: 100%;
   display: none;
-  margin-top: -160px;
+  margin-top: 0px;
 }
 
 #flowerDesc {
