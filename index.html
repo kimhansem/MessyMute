@@ -111,6 +111,7 @@
         const thumb = document.createElement('img');
         thumb.src = `img/${f.date}.jpg`;
         thumb.alt = f.date;
+        thumb.loading = "lazy"; 
         thumb.onclick = () => showFlower(f.date);
         grid.appendChild(thumb);
       });
