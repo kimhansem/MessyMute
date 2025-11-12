@@ -5,46 +5,50 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>무원</title>
   <link rel="stylesheet" href="styles.css">
+  
+  <script>
+    (function(d) {
+      var config = {
+        kitId: 'xca0zac',
+        scriptTimeout: 3000,
+        async: true
+      },
+      h=d.documentElement,t=setTimeout(function(){h.className=h.className.replace(/\bwf-loading\b/g,"")+" wf-inactive";},config.scriptTimeout),tk=d.createElement("script"),f=false,s=d.getElementsByTagName("script")[0],a;h.className+=" wf-loading";tk.src='https://use.typekit.net/'+config.kitId+'.js';tk.async=true;tk.onload=tk.onreadystatechange=function(){a=this.readyState;if(f||a&&a!="complete"&&a!="loaded")return;f=true;clearTimeout(t);try{Typekit.load(config)}catch(e){}};s.parentNode.insertBefore(tk,s)
+    })(document);
+  </script>
+  
 </head>
 <body>
   <!-- 메인 -->
   <div id="mainPage">
     <div id="message">당신의 탄생화는 무엇인가요?</div>
     <input type="text" id="dateInput" placeholder="생일을 입력해주세요 ex) 0123" class="custom-input">
-    
-      <svg id="confirmBtn" xmlns="http://www.w3.org/2000/svg" 
-       viewBox="0 0 33.55 32.6" width="40" height="40" style="cursor:pointer;">
-    <defs>
-      <style>
-        .cls-1 { fill: #ddd; } /* 버튼 색상 변경 */
-      </style>
-    </defs>
-    <g>
-      <path class="cls-1" d="M5.86,5.58v21.43h21.82V5.58H5.86ZM25.29,24.6H8.26V7.98h17.02v16.62Z"/>
-      <rect class="cls-1" x="31.15" y="3.17" width="2.4" height="26.22"/>
-      <rect class="cls-1" y="3.17" width="2.4" height="26.22"/>
-      <rect class="cls-1" x="3.28" y="30.3" width="27" height="2.3"/>
-      <rect class="cls-1" x="3.28" width="27" height="2.3"/>
-    </g>
-  </svg>
-
-    
-    
-    
+    <svg id="confirmBtn" xmlns="http://www.w3.org/2000/svg" 
+      viewBox="0 0 33.55 32.6" width="34" height="34" style="cursor:pointer;">
+      <g>
+        <path class="cls-1" d="M5.86,5.58v21.43h21.82V5.58H5.86ZM25.29,24.6H8.26V7.98h17.02v16.62Z"/>
+        <rect class="cls-1" x="31.15" y="3.17" width="2.4" height="26.22"/>
+        <rect class="cls-1" y="3.17" width="2.4" height="26.22"/>
+        <rect class="cls-1" x="3.28" y="30.3" width="27" height="2.3"/>
+        <rect class="cls-1" x="3.28" width="27" height="2.3"/>
+      </g>
+    </svg>    
   </div>
 
   <!-- 상세 -->
   <div id="detailPage" style="display:none;">
     <img id="flowerImage" src="">
-    <h2 id="flowerTitle"></h2>
+    <div class="textBox">
+    <p id="flowerTitle"></p>
     <p id="flowerBody"></p>
     <p id="flowerClosing"></p>
-    <button onclick="showGallery()">see all</button>
+    <button id="goGalleryBtn" onclick="showGallery()">see all</button>
+    </div>
   </div>
 
   <!-- 모두보기 -->
   <div id="galleryPage" style="display:none;">
-    <button class="main-btn" onclick="goMain()">main</button>
+    <button id="goMainBtn" onclick="goMain()">main</button>
     <div class="gallery-grid" id="galleryGrid"></div>
   </div>
 
@@ -76,9 +80,11 @@
 
       document.getElementById('mainPage').style.display = 'none';
       document.getElementById('galleryPage').style.display = 'none';
-      document.getElementById('detailPage').style.display = 'block';
+      document.getElementById('detailPage').style.display = '';
       document.body.className = 'detail-bg';
-
+      
+      window.scrollTo(0, 0);
+ 
 
       const img = document.getElementById('flowerImage');
       const title = document.getElementById('flowerTitle');
@@ -102,8 +108,9 @@
       document.getElementById('detailPage').style.display = 'none';
       document.getElementById('galleryPage').style.display = 'block';
       document.body.className = 'gallery-bg';
-
-
+      
+      window.scrollTo(0, 0);
+ 
       const grid = document.getElementById('galleryGrid');
       grid.innerHTML = '';
 
@@ -118,14 +125,19 @@
     }
 
     function goMain() {
-   document.getElementById('detailPage').style.display = 'none';
-  document.getElementById('galleryPage').style.display = 'none';
-  document.getElementById('mainPage').style.display = ''; // 인라인 스타일 제거
-  document.body.className = 'main-bg';
-document.getElementById('dateInput').value = '';
-
-
+      document.getElementById('detailPage').style.display = 'none';
+      document.getElementById('galleryPage').style.display = 'none';
+      document.getElementById('mainPage').style.display = ''; // 인라인 스타일 제거
+      document.body.className = 'main-bg';
+      document.getElementById('dateInput').value = '';
+  
+      window.scrollTo(0, 0);
+    
     }
+    
+    
+
+
   </script>
 </body>
 </html>
