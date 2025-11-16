@@ -57,7 +57,6 @@
   <script>
     let flowerData = [];
 
-  window.onload = () => {
     //  JSON 불러오기
     fetch('flowers.json')
       .then(response => response.json())
@@ -67,10 +66,6 @@
 
     //  버튼 이벤트 연결
     document.getElementById('confirmBtn').addEventListener('click', () => showFlower());
-
-
-  };
-
 
 
     function showFlower(date) {
@@ -170,3 +165,4 @@
   </script>
 </body>
 </html>
+
