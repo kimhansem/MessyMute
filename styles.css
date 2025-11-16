@@ -43,7 +43,7 @@ body.gallery-bg {
 
 #mainPage {  
   display: flex;
-  flex-direction: column;  
+  flex-direction: column; 
   align-items: center;     
   justify-content: center;  
   min-height: 100vh;
@@ -72,11 +72,11 @@ body.gallery-bg {
   letter-spacing: 0.6em;
   
   color: #111;
-  background-color: #ddd
+  background-color: #fff
 }
 
 .custom-input::placeholder {
-  color: #aaa;              /* 플레이스홀더 글자 색상 */
+  color: #aaa;
   font-family: 'Tasan Regular', sans-serif;
   font-size: clamp(16px, 3vw, 26px);
   letter-spacing: 0px;
@@ -95,11 +95,6 @@ body.gallery-bg {
 #confirmBtn:hover .cls-1 {
   fill: #fff; /* hover 시 색상 변경 */
 } 
- 
-
-
-
-
 
 
 
@@ -128,7 +123,7 @@ body.gallery-bg {
 
 
 .textBox{
-  margin-left: 40px;
+  margin-left: 50px;
 }
 
 #flowerTitle {
@@ -148,7 +143,7 @@ body.gallery-bg {
   font-family: "source-han-sans-korean", sans-serif;
   font-weight: 400;
   
-  font-size: 1.3em;
+  font-size: 1.1em;
   letter-spacing: -0.05em;
   line-height: 1.8;
   text-align: left;
@@ -187,7 +182,8 @@ body.gallery-bg {
   font-size: 1.3em;
 
   cursor: pointer;
-  transition: background-color 0.3s;
+  transition: background-color 0.2s ease;
+  transition: color 0.2 eases;
 }
 
 
@@ -195,6 +191,7 @@ body.gallery-bg {
   background-color: #eee;
   color: #111;
 }
+
 
 
 
@@ -214,8 +211,21 @@ body.gallery-bg {
 .gallery-grid img {
   width: calc(100% / 5 - 12px);
   cursor: pointer;
-  transition: opacity 0.3s ease;
+  /*transition: opacity 0.3s ease;*/
+  
+  opacity: 0;
+  /*transform: translateY(22px);*/
+  transition: opacity 0.4s ease, transform 0.4s ease;
+  will-change: opacity, transform;
+
+  
 }
+
+.gallery-grid img.enter {
+  opacity: 1;
+  /*transform: translateY(0);*/
+}
+
 
 @media (min-width: 768px) {
   .gallery-grid img:hover {
@@ -244,19 +254,14 @@ body.gallery-bg {
   font-family: 'Tasan Regular', sans-serif;
   
   cursor: pointer;
-  transition: background-color 0.3s;
+  transition: background-color 0.2s ease;
+  transition: color 0.2s ease;
 }
 
 #goMainBtn:hover {
   background-color: #222;
   color: #eee;
 }
-
-
-
-
-
-
 
 
 
@@ -303,12 +308,17 @@ body.gallery-bg {
     
     
   /*2.상세페이지 (모바일)  */
+    
   
     #detailPage {
       color: #111a;
       display: flex;
       flex-direction: column;
       align-items: center;
+    }
+   
+    body.detail-bg { 
+      background-color: #fff; 
     }
   
     #flowerImage {
@@ -381,7 +391,6 @@ body.gallery-bg {
     
 
   
-  
     #goMainBtn {
     position: fixed;
     top: 24px;
@@ -411,5 +420,41 @@ body.gallery-bg {
     
     
 }
+
+
+
+
+/*애니메이션*/
+/* 디테일 페이지 공통 초기 상태 */
+#detailPage img,
+#detailPage p {
+  opacity: 0;
+  transform: translateY(22px);
+  transition: opacity 0.8s ease, transform 0.8s ease;
+  will-change: opacity, transform;
+  
+  -webkit-transform: translateY(22px);
+  -webkit-transition: opacity 0.8s ease, -webkit-transform 0.8s ease;
+}
+
+/* 애니메이션 적용 상태 */
+#detailPage img.enter,
+#detailPage p.enter {
+  opacity: 1;
+  transform: translateY(0);
+  -webkit-transform: translateY(0);
+
+}
+
+
+
+
+
+
+
+
+
+
+
 
 
