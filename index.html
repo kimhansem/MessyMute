@@ -75,24 +75,22 @@
         alert("날짜 형식이 올바르지 않습니다. 예: 0103");
         return;
       }
-
+    
       const data = flowerData.find(f => f.date === input);
-
+    
       document.getElementById('mainPage').style.display = 'none';
       document.getElementById('galleryPage').style.display = 'none';
       document.getElementById('detailPage').style.display = '';
       document.body.className = 'detail-bg';
-      
       window.scrollTo(0, 0);
- 
-
+    
       const img = document.getElementById('flowerImage');
       const title = document.getElementById('flowerTitle');
       const body = document.getElementById('flowerBody');
       const closing = document.getElementById('flowerClosing');
-
+    
       img.src = `img/${input}.jpg`;
-
+    
       if (data) {
         title.textContent = data.title;
         body.textContent = data.body;
@@ -102,27 +100,57 @@
         body.textContent = "";
         closing.textContent = "";
       }
+    
+      // 애니메이션 초기화: hidden 상태로 세팅
+      [img, title, body, closing].forEach(el => {
+        el.classList.remove('enter');
+        el.classList.add('hidden');
+      });
+    
+      // 순차적으로 enter 클래스 추가 (딜레이 + requestAnimationFrame)
+      const elements = [img, title, body, closing];
+      const delay = 250; // 간격(ms) 원하는 값으로 조정
+    
+      elements.forEach((el, index) => {
+        setTimeout(() => {
+          requestAnimationFrame(() => {
+            el.classList.remove('hidden');
+            el.classList.add('enter');
+          });
+        }, delay * index);
+      });
     }
+
+
 
     function showGallery() {
       document.getElementById('detailPage').style.display = 'none';
       document.getElementById('galleryPage').style.display = 'block';
       document.body.className = 'gallery-bg';
-      
       window.scrollTo(0, 0);
- 
+
       const grid = document.getElementById('galleryGrid');
       grid.innerHTML = '';
 
-      flowerData.forEach(f => {
+      flowerData.forEach((f, index) => {
         const thumb = document.createElement('img');
-        thumb.src = `img/${f.date}.jpg`;
+        thumb.src = `img/thumb/${f.date}.jpg`;
         thumb.alt = f.date;
-        thumb.loading = "lazy"; 
+        thumb.loading = 'lazy';
         thumb.onclick = () => showFlower(f.date);
+    
+        // Start in hidden state (matches base CSS).
+        thumb.classList.remove('enter');
         grid.appendChild(thumb);
+    
+        // Trigger the transition after insertion, with a small stagger.
+        setTimeout(() => {
+          thumb.classList.add('enter');
+        }, 140 + index * 40);
       });
     }
+
+
 
     function goMain() {
       document.getElementById('detailPage').style.display = 'none';
@@ -132,9 +160,11 @@
       document.getElementById('dateInput').value = '';
   
       window.scrollTo(0, 0);
-    
+      
     }
     
+
+
   </script>
 </body>
 </html>
