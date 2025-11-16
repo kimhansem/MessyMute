@@ -57,6 +57,7 @@
   <script>
     let flowerData = [];
 
+  window.onload = () => {
     //  JSON 불러오기
     fetch('flowers.json')
       .then(response => response.json())
@@ -68,58 +69,140 @@
     document.getElementById('confirmBtn').addEventListener('click', () => showFlower());
 
 
-    function showFlower(date) {
-      const input = date || document.getElementById('dateInput').value.trim();
-      if (!/^\d{4}$/.test(input)) {
-        alert("날짜 형식이 올바르지 않습니다. 예: 0103");
-        return;
-      }
-    
-      const data = flowerData.find(f => f.date === input);
-    
-      document.getElementById('mainPage').style.display = 'none';
-      document.getElementById('galleryPage').style.display = 'none';
-      document.getElementById('detailPage').style.display = '';
-      document.body.className = 'detail-bg';
-      window.scrollTo(0, 0);
-    
-      const img = document.getElementById('flowerImage');
-      const title = document.getElementById('flowerTitle');
-      const body = document.getElementById('flowerBody');
-      const closing = document.getElementById('flowerClosing');
-    
-      img.src = `img/${input}.jpg`;
-    
-      if (data) {
-        title.textContent = data.title;
-        body.textContent = data.body;
-        closing.textContent = data.closing;
-      } else {
-        title.textContent = "해당 날짜의 꽃 설명이 없습니다.";
-        body.textContent = "";
-        closing.textContent = "";
-      }
-    
-      // 애니메이션 초기화: hidden 상태로 세팅
-      [img, title, body, closing].forEach(el => {
-        el.classList.remove('enter');
-        el.classList.add('hidden');
-      });
-    
-      // 순차적으로 enter 클래스 추가 (딜레이 + requestAnimationFrame)
-      const elements = [img, title, body, closing];
-      const delay = 250; // 간격(ms) 원하는 값으로 조정
-    
-      elements.forEach((el, index) => {
-        setTimeout(() => {
-          requestAnimationFrame(() => {
-            el.classList.remove('hidden');
-            el.classList.add('enter');
-          });
-        }, delay * index);
-      });
-    }
+  };
 
+
+
+    // function showFlower(date) {
+    //   const input = date || document.getElementById('dateInput').value.trim();
+    //   if (!/^\d{4}$/.test(input)) {
+    //     alert("날짜 형식이 올바르지 않습니다. 예: 0103");
+    //     return;
+    //   }
+    
+    //   const data = flowerData.find(f => f.date === input);
+    
+    //   document.getElementById('mainPage').style.display = 'none';
+    //   document.getElementById('galleryPage').style.display = 'none';
+    //   document.getElementById('detailPage').style.display = '';
+    //   document.body.className = 'detail-bg';
+    //   window.scrollTo(0, 0);
+    
+    //   const img = document.getElementById('flowerImage');
+    //   const title = document.getElementById('flowerTitle');
+    //   const body = document.getElementById('flowerBody');
+    //   const closing = document.getElementById('flowerClosing');
+    
+    //   img.src = `img/${input}.jpg`;
+    
+    //   if (data) {
+    //     title.textContent = data.title;
+    //     body.textContent = data.body;
+    //     closing.textContent = data.closing;
+    //   } else {
+    //     title.textContent = "해당 날짜의 꽃 설명이 없습니다.";
+    //     body.textContent = "";
+    //     closing.textContent = "";
+    //   }
+    
+      
+    //   // 애니메이션 초기화: hidden 상태로 세팅
+    //   [img, title, body, closing].forEach(el => {
+    //     el.classList.remove('enter');
+    //     el.classList.add('hidden');
+    //   });
+    
+    //   // 순차적으로 enter 클래스 추가 (딜레이 + requestAnimationFrame)
+    //   const elements = [img, title, body, closing];
+    //   const delay = 250; // 간격(ms) 원하는 값으로 조정
+    
+    //   elements.forEach((el, index) => {
+    //     setTimeout(() => {
+    //       requestAnimationFrame(() => {
+    //         el.classList.remove('hidden');
+    //         el.classList.add('enter');
+    //       });
+    //     }, delay * index);
+    //   });
+    // }
+
+function showFlower(date) {
+  const input = date || document.getElementById('dateInput').value.trim();
+  if (!/^\d{4}$/.test(input)) {
+    alert("날짜 형식이 올바르지 않습니다. 예: 0103");
+    return;
+  }
+
+  const data = flowerData.find(f => f.date === input);
+
+  // 페이지 전환 및 스크롤
+  document.getElementById('mainPage').style.display = 'none';
+  document.getElementById('galleryPage').style.display = 'none';
+  document.getElementById('detailPage').style.display = '';
+  document.body.className = 'detail-bg';
+  window.scrollTo(0, 0);
+
+  const img = document.getElementById('flowerImage');
+  const title = document.getElementById('flowerTitle');
+  const body = document.getElementById('flowerBody');
+  const closing = document.getElementById('flowerClosing');
+
+  // 모든 요소 숨김 상태로 초기화
+  [img, title, body, closing].forEach(el => {
+    el.classList.remove('enter');
+    el.classList.add('hidden');
+  });
+
+  // 텍스트 내용 미리 설정 (폰트 로딩 대기용)
+  if (data) {
+    title.textContent = data.title;
+    body.textContent = data.body;
+    closing.textContent = data.closing;
+  } else {
+    title.textContent = "해당 날짜의 꽃 설명이 없습니다.";
+    body.textContent = "";
+    closing.textContent = "";
+  }
+
+  // 이미지 preload
+  const preloadImg = new Image();
+  preloadImg.src = `img/${input}.jpg`;
+
+  preloadImg.onload = () => {
+    // 이미지 로드 완료 후 src 설정
+    img.src = preloadImg.src;
+
+    // 폰트 로딩 대기
+    if (document.fonts && document.fonts.ready) {
+      document.fonts.ready.then(() => {
+        startAnimation();
+      });
+    } else {
+      // fonts API 미지원 브라우저 대비
+      setTimeout(startAnimation, 100);
+    }
+  };
+
+  preloadImg.onerror = () => {
+    // 이미지 로드 실패 시에도 표시
+    img.src = preloadImg.src;
+    startAnimation();
+  };
+
+  function startAnimation() {
+    const elements = [img, title, body, closing];
+    const delay = 250;
+
+    elements.forEach((el, index) => {
+      setTimeout(() => {
+        requestAnimationFrame(() => {
+          el.classList.remove('hidden');
+          el.classList.add('enter');
+        });
+      }, delay * index);
+    });
+  }
+}
 
 
     function showGallery() {
@@ -165,4 +248,3 @@
   </script>
 </body>
 </html>
-
