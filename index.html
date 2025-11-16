@@ -55,22 +55,21 @@
 
 
   <script>
- 
-
-
-    
-    
     let flowerData = [];
 
-    // JSON 불러오기
+  window.onload = () => {
+    //  JSON 불러오기
     fetch('flowers.json')
       .then(response => response.json())
       .then(data => {
         flowerData = data;
       });
 
+    //  버튼 이벤트 연결
+    document.getElementById('confirmBtn').addEventListener('click', () => showFlower());
 
-   document.getElementById('confirmBtn').addEventListener('click', () => showFlower());
+
+  };
 
 
 
@@ -168,10 +167,6 @@
       
     }
     
-
-
   </script>
 </body>
 </html>
-
-
