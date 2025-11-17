@@ -8,8 +8,8 @@
 }
 
 * {
-  box-sizing: border-box;
-  overflow-x: hidden;
+  /*box-sizing: border-box;*/
+  /*overflow-x: hidden;*/
 }
 
 
@@ -32,6 +32,7 @@ body {
   padding: 0px;
   text-align: center;
   background-color: #000; 
+   overflow-x: hidden;
 }
 
 body.main-bg { 
@@ -140,7 +141,10 @@ body.gallery-bg {
 }
 
 #flowerImage {
-  height: 100vh;
+
+
+      height: 100vh;
+  
   border-right: 1px solid #777;
   
 }
@@ -253,13 +257,13 @@ body.gallery-bg {
   margin-right: 80px;
   display: flex;
   flex-wrap: wrap;
-  gap: 5px;
+  gap: 3px;
   justify-content: center;
 }
 
 
 .gallery-grid img {
-  width: calc(100% / 5 - 12px);
+  width: calc(100% / 6 - 12px);
   cursor: pointer;
   /*transition: opacity 0.3s ease;*/
   
@@ -371,6 +375,7 @@ body.gallery-bg {
       flex-direction: column;
       align-items: center;
       
+      overflow-x: hidden;
     }
    
     body.detail-bg { 
@@ -453,7 +458,7 @@ body.gallery-bg {
     }
   
     .gallery-grid img {
-      width: calc(100% / 3 - 8px);
+      width: calc(100% / 3 - 4px);
     }
     
 
