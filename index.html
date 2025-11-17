@@ -166,13 +166,15 @@ function showGallery() {
     thumb.alt = f.date;
     thumb.loading = 'lazy';
     thumb.onclick = () => showFlower(f.date);
-
+  
     thumb.classList.remove('enter');
     grid.appendChild(thumb);
-
-    setTimeout(() => {
-      thumb.classList.add('enter');
-    }, 140 + index * 40);
+  
+    thumb.onload = () => {
+      setTimeout(() => {
+        thumb.classList.add('enter');
+      }, 40 + index * 40);
+    };
   });
 }
 
@@ -188,3 +190,4 @@ function goMain() {
 </script>
 </body>
 </html>
+
