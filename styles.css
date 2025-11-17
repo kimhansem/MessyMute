@@ -4,7 +4,15 @@
   src: url('fonts/Tasan Regular.otf') format('opentype');
   font-weight: normal;
   font-style: normal;
+  
 }
+
+* {
+  box-sizing: border-box;
+  overflow-x: hidden;
+}
+
+
 
 button, img, svg { /* 탭 하이라이트 제거 */
   -webkit-tap-highlight-color: transparent; 
@@ -23,17 +31,17 @@ body {
   margin: 0;
   padding: 0px;
   text-align: center;
-  background-color: #111; 
+  background-color: #000; 
 }
 
 body.main-bg { 
-  background-color: #111; 
+  background-color: #000; 
   }
 body.detail-bg { 
   background-color: #fff; 
   }
 body.gallery-bg { 
-  background-color: #111; 
+  background-color: #000; 
   }
 
 
@@ -49,51 +57,66 @@ body.gallery-bg {
   min-height: 100vh;
 }
 
-#message {
-  font-family: 'Tasan Regular', sans-serif;
-  font-size: clamp(16px, 4vw, 32px);
+#logo {
+  fill: #fff;
+}
 
+#message {
+  margin-top: 60px;
+  
+  font-family: 'Tasan Regular', sans-serif;
+  font-size: 1.5em;
   color: #eee;
 }
 
 
 .custom-input {
-  
   margin-top: 40px;
-  padding: 20px 30px;
-  border-radius: 10px;
+  padding: 10px 20px;
+  border-radius: 4px;
 
   border: 0;
   outline: none;
   
   font-family: 'Tasan Regular', sans-serif;
   text-align: center;
-  font-size: clamp(16px, 6vw, 32px);
+  font-size: 1.2em;
   letter-spacing: 0.6em;
   
-  color: #111;
-  background-color: #fff
+  color: #000;
+  background-color: #ccc
 }
 
 .custom-input::placeholder {
-  color: #aaa;
+  color: #a0a0a0;
   font-family: 'Tasan Regular', sans-serif;
-  font-size: clamp(16px, 3vw, 26px);
+  font-size: 1.1em;
   letter-spacing: 0px;
 }
 
+
 #confirmBtn {
-  margin-top: 50px;
+  display: block;
+  margin-top: 40px;
+  padding: 6px 20px 4px;
+  
+  border: none;
+  
+  background-color:#fff;
+  color: #000;
+  
+  font-family: 'Tasan Regular', sans-serif;
+  font-size: 1.3em;
+
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  transition: color 0.2 eases;
+  
 }
 
-#confirmBtn .cls-1 {
-
-  fill: #ccc;
-  transition: fill 0.2s ease;
-}
-
-#confirmBtn:hover .cls-1 {
-  fill: #fff; /* hover 시 색상 변경 */
+#confirmBtn:hover {
+  background-color: #222;
+  color: #fff;
 } 
 
 
@@ -104,9 +127,9 @@ body.gallery-bg {
 
 
 #detailPage {
-  margin: 0px;
+  margin: 0px 200px 0px;
   
-  color: #111;
+  color: #000;
   display: flex;
   flex-direction: row;
   align-items: flex-start;
@@ -119,6 +142,7 @@ body.gallery-bg {
 #flowerImage {
   height: 100vh;
   border-right: 1px solid #777;
+  
 }
 
 
@@ -131,21 +155,21 @@ body.gallery-bg {
 
   font-family: "source-han-sans-korean", sans-serif;
   font-weight: 700;
-  font-size: 1.4em;
+  font-size: 1em;
   text-align: left;
-  color: #111;
+  color: #000;
 }
 
 #flowerBody {
-  margin: 20px 240px 0px 0px;
+  margin: 20px 160px 0px 0px;
   padding: 0px 0px;
   
   font-family: "source-han-sans-korean", sans-serif;
   font-weight: 400;
   
-  font-size: 1.1em;
+  font-size: 1em;
   letter-spacing: -0.05em;
-  line-height: 1.8;
+  line-height: 1.9;
   text-align: left;
   word-break: keep-all;
   
@@ -156,26 +180,31 @@ body.gallery-bg {
 #flowerClosing {
     margin: 40px 0px 0px;
     
-    font-size: 1.3em;
+    font-size: 1em;
     font-family: "source-han-sans-korean", sans-serif;
     font-weight: 700;
     text-align: left;
-    color: #111;
+    color: #000;
 
 }
 
 
+#btnBox{
+  margin: 60px 0px 0px;
+
+  display: flex;
+  gap: 16px;
+  justify-content: flex-start;
+  
+}
 
 #goGalleryBtn {
-  display: block;
-  margin: 60px 0px 0px;
-  
-  padding: 10px 60px 8px;
+
+  padding: 6px 20px 4px;
   
   border: none;
-  border-radius: 30px;
   
-  background-color:#111;
+  background-color:#000;
   color: #eee;
   
   font-family: 'Tasan Regular', sans-serif;
@@ -189,9 +218,30 @@ body.gallery-bg {
 
 #goGalleryBtn:hover {
   background-color: #eee;
-  color: #111;
+  color: #000;
 }
 
+#goMainBtn1 {
+
+  padding: 6px 20px 4px;
+  
+  border: none;
+  
+  background-color:#000;
+  color: #eee;
+  
+  font-family: 'Tasan Regular', sans-serif;
+  font-size: 1.3em;
+
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  transition: color 0.2 eases;
+}
+
+#goMainBtn1:hover {
+  background-color: #eee;
+  color: #000;
+}
 
 
 
@@ -234,7 +284,7 @@ body.gallery-bg {
 }
 
 
-#goMainBtn {
+#goMainBtn2 {
   position: fixed;
   top: 40px;
   margin: 0px auto;
@@ -242,13 +292,12 @@ body.gallery-bg {
   left: 50%;
   z-index: 1000;
   
-  padding: 10px 90px 8px;
+  padding: 6px 20px 4px;
   
   border: none;
-  border-radius: 30px;
   
   background-color: #eee;
-  color: #111;
+  color: #000;
   
   font-size: 1.3em;
   font-family: 'Tasan Regular', sans-serif;
@@ -258,7 +307,7 @@ body.gallery-bg {
   transition: color 0.2s ease;
 }
 
-#goMainBtn:hover {
+#goMainBtn2:hover {
   background-color: #222;
   color: #eee;
 }
@@ -280,7 +329,7 @@ body.gallery-bg {
   /*1.메인페이지 (모바일)*/
     
     #mainPage {  
-      min-height: 86vh;
+      min-height: 70vh;
     }
     
     #message {
@@ -290,7 +339,7 @@ body.gallery-bg {
 
     .custom-input {
       margin-top: 32px;
-      padding: 20px 0px;
+      padding: 10px 0px;
       font-size: 1.2em;
       letter-spacing: 0.6em;
     }
@@ -301,7 +350,12 @@ body.gallery-bg {
     }
     
     #confirmBtn {
-      margin-top: 54px;
+      margin-top: 32px;
+      
+      padding: 6px 20px 4px;
+      width: auto;
+      font-size: 1.1em;
+      
     }
     
    
@@ -311,10 +365,12 @@ body.gallery-bg {
     
   
     #detailPage {
-      color: #111a;
+      color: #000;
+      margin: 0;
       display: flex;
       flex-direction: column;
       align-items: center;
+      
     }
    
     body.detail-bg { 
@@ -337,41 +393,52 @@ body.gallery-bg {
       margin: 34px 0px 0px;
       
       text-align: center;
-      font-size: 1.1em;
+      font-size: 0.9em;
     }
   
     #flowerBody {
       margin: 16px 0px 0px;
       padding: 0px 25px;
       
-      font-size: 1em;
+      font-size: 0.9em;
       letter-spacing: -0.05em;
-      line-height: 1.6;
-      text-align: center;
-      word-break: keep-all;
+      line-height: 1.8;
+      text-align: justify;
+      word-break: break-all;
       
     }
   
     #flowerClosing {
       margin: 34px 0px 0px;
-      font-size: 1em;
+      font-size: 0.9em;
       text-align: center;
     }
   
-    #goGalleryBtn {
+  
+    #btnBox {
       margin: 0px auto;
       margin-top: 70px;
-      margin-bottom: 40px;
+      margin-bottom: 80px;
       
-      padding: 10px 16vw 8px;
-      width: auto;
-      
-      font-size: 1.3em;
+      display: flex;
+      gap: 16px;
+      justify-content: center;
+  
+    }  
+  
+    #goGalleryBtn {
+      padding: 6px 20px 4px;
+      font-size: 1.1em;
     }
     
     #goGalleryBtn:active {
-      background-color: #eee;
-      color: #111;
+      background-color: #fff;
+      color: #000;
+    }
+    
+    #goMainBtn1 {
+      padding: 6px 20px 4px;
+      font-size: 1.1em;
     }
 
     
@@ -391,7 +458,7 @@ body.gallery-bg {
     
 
   
-    #goMainBtn {
+    #goMainBtn2 {
     position: fixed;
     top: 24px;
     margin: 0px auto;
@@ -399,22 +466,22 @@ body.gallery-bg {
     left: 50%;
     z-index: 1000;
     
-    padding: 10px 16vw 8px;
+    padding: 6px 20px 4px;
+    width: auto;
     
     border: none;
-    border-radius: 30px;
     
     background-color: #eee;
-    color: #111;
+    color: #000;
     
-    font-size: 1.3em;
+    font-size: 1.1em;
     font-family: 'Tasan Regular', sans-serif;
     
     cursor: pointer;
   }
   
-    #goGalleryBtn:active {
-    background-color: #111;
+    #goGalleryBtn2:active {
+    background-color: #000;
     color: #eee;
   }
     
