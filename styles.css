@@ -141,11 +141,11 @@ body.gallery-bg {
 }
 
 #flowerImage {
-
-
-      height: 100vh;
-  
+  height: 100vh;
   border-right: 1px solid #777;
+  
+  background-color: #000;
+  color: #000;
   
 }
 
@@ -177,7 +177,7 @@ body.gallery-bg {
   text-align: left;
   word-break: keep-all;
   
-  color: #444;
+  color: #111;
   
 }
 
@@ -247,7 +247,26 @@ body.gallery-bg {
   color: #000;
 }
 
+#goLinkBtn {
+  padding: 6px 20px 4px;
+  
+  border: none;
+  
+  background-color:#000;
+  color: #eee;
+  
+  font-family: 'Tasan Regular', sans-serif;
+  font-size: 1.3em;
 
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  transition: color 0.2 eases;
+}
+
+#goLinkBtn:hover {
+  background-color: #eee;
+  color: #000;
+}
 
 /* 3. 갤러리페이지 갤러리페이지 갤러리페이지 갤러리페이지 갤러리페이지 갤러리페이지 갤러리페이지 갤러리페이지*/
 
@@ -426,7 +445,7 @@ body.gallery-bg {
       margin-bottom: 80px;
       
       display: flex;
-      gap: 16px;
+      gap: 12px;
       justify-content: center;
   
     }  
@@ -436,18 +455,17 @@ body.gallery-bg {
       font-size: 1.1em;
     }
     
-    #goGalleryBtn:active {
-      background-color: #fff;
-      color: #000;
-    }
-    
     #goMainBtn1 {
       padding: 6px 20px 4px;
       font-size: 1.1em;
     }
-
     
-  
+    #goLinkBtn {
+      padding: 6px 20px 4px;
+      font-size: 1.1em;
+    }
+
+
   
   /*3. 갤러리페이지 (모바일)*/
   
@@ -517,16 +535,6 @@ body.gallery-bg {
   -webkit-transform: translateY(0);
 
 }
-
-
-
-
-
-
-
-
-
-
 
 
 
