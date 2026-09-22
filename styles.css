@@ -478,6 +478,8 @@ body.gallery-bg {
     .gallery-grid img {
       width: calc(100% / 3 - 4px);
       cursor: pointer;
+      touch-action: manipulation;
+      -webkit-tap-highlight-color: transparent;
     }
     
 
