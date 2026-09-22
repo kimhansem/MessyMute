@@ -24,27 +24,11 @@
 <link rel="shortcut icon" href="/favicon.ico" />
 <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
 <link rel="manifest" href="/site.webmanifest" />
-
-  
-  
 </head>
-
 
 <body class="main-bg">
   <!-- 1 메인 -->
   <div id="mainPage">
-    <!--<a href="https://site.tagme.my/messymute">-->
-    <!--  <svg id="logo" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 33.55 32.6" width="30" height="30" style="cursor:pointer;">-->
-    <!--    <g>-->
-    <!--      <path class="cls-1" d="M5.86,5.58v21.43h21.82V5.58H5.86ZM25.29,24.6H8.26V7.98h17.02v16.62Z"/>-->
-    <!--      <rect class="cls-1" x="31.15" y="3.17" width="2.4" height="26.22"/>-->
-    <!--      <rect class="cls-1" y="3.17" width="2.4" height="26.22"/>-->
-    <!--      <rect class="cls-1" x="3.28" y="30.3" width="27" height="2.3"/>-->
-    <!--      <rect class="cls-1" x="3.28" width="27" height="2.3"/>-->
-    <!--    </g>-->
-    <!--  </svg>-->
-    <!--</a>-->
-
     <div id="message">당신의 탄생화는 무엇인가요?</div>
     <input type="text" id="dateInput" placeholder="생일을 입력해주세요 ex) 0123" class="custom-input">
     <button id="confirmBtn">enter</button>
@@ -75,19 +59,15 @@
 let flowerData = [];
 
 window.onload = () => {
-  // JSON 불러오기
   fetch('flowers.json')
     .then(response => response.json())
     .then(data => { flowerData = data; });
 
-  // 버튼 이벤트 연결
   document.getElementById('confirmBtn').addEventListener('click', () => showFlower());
   document.getElementById('goMainBtn1').addEventListener('click', goMain);
   document.getElementById('goMainBtn2').addEventListener('click', goMain);
   document.getElementById('goGalleryBtn').addEventListener('click', showGallery);
 };
-
-// 상세 페이지 표시
 
 function showFlower(date) {
   const input = date || document.getElementById('dateInput').value.trim();
@@ -158,7 +138,6 @@ function showFlower(date) {
   const preloadImg = new Image();
   let settled = false;
 
-  // ✅ onload/onerror를 src 지정보다 먼저 등록
   preloadImg.onload = () => {
     if (settled) return;
     settled = true;
@@ -173,7 +152,6 @@ function showFlower(date) {
 
   preloadImg.src = `img/${input}.jpg`;
 
-  // ✅ 캐시 히트로 이벤트가 씹혔을 경우를 대비한 안전장치
   if (preloadImg.complete) {
     if (preloadImg.naturalWidth > 0) {
       if (!settled) { settled = true; handleReady(preloadImg.src); }
@@ -182,8 +160,6 @@ function showFlower(date) {
     }
   }
 }
-
-
 
 // 갤러리 페이지 표시
 function showGallery() {
@@ -201,9 +177,27 @@ function showGallery() {
     thumb.src = `img/thumb/${f.date}.jpg`;
     thumb.alt = f.date;
     thumb.loading = 'lazy';
-    
-    // ✅ onclick 대신 addEventListener 사용
-    thumb.addEventListener('click', () => showFlower(f.date));
+    thumb.setAttribute('role', 'button');
+    thumb.setAttribute('tabindex', '0');
+
+    // iOS Safari에서 img의 click 이벤트가 누락되는 경우를 대비해
+    // touchend도 함께 처리합니다. 짧은 시간 내 중복 실행은 방지합니다.
+    let lastActivation = 0;
+    const activateThumb = (event) => {
+      const now = Date.now();
+      if (now - lastActivation < 500) return;
+      lastActivation = now;
+      if (event.type === 'touchend') event.preventDefault();
+      showFlower(f.date);
+    };
+    thumb.addEventListener('click', activateThumb);
+    thumb.addEventListener('touchend', activateThumb, { passive: false });
+    thumb.addEventListener('keydown', (event) => {
+      if (event.key === 'Enter' || event.key === ' ') {
+        event.preventDefault();
+        activateThumb(event);
+      }
+    });
 
     thumb.classList.remove('enter');
     grid.appendChild(thumb);
@@ -216,7 +210,6 @@ function showGallery() {
   });
 }
 
-// 메인 페이지로 돌아가기
 function goMain() {
   document.getElementById('detailPage').style.display = 'none';
   document.getElementById('galleryPage').style.display = 'none';
@@ -228,5 +221,3 @@ function goMain() {
 </script>
 </body>
 </html>
-
-
