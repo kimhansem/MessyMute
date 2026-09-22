@@ -108,7 +108,7 @@ function showFlower(date) {
   const title = document.getElementById('flowerTitle');
   const body = document.getElementById('flowerBody');
   const closing = document.getElementById('flowerClosing');
-  const linkBtn = document.getElementById('goLinkBtn'); // ✅ 새 버튼
+  const linkBtn = document.getElementById('goLinkBtn');
 
   [img, title, body, closing].forEach(el => {
     el.classList.remove('enter');
@@ -122,9 +122,9 @@ function showFlower(date) {
 
     if (data.link) {
       linkBtn.style.display = 'inline-block';
-      linkBtn.onclick = () => window.open(data.link, '_blank'); // ✅ 새 탭에서 열기
+      linkBtn.onclick = () => window.open(data.link, '_blank');
     } else {
-      linkBtn.style.display = 'none'; // 링크 없으면 숨김
+      linkBtn.style.display = 'none';
     }
   } else {
     title.textContent = "해당 날짜의 꽃 설명이 없습니다.";
@@ -132,23 +132,6 @@ function showFlower(date) {
     closing.textContent = "";
     linkBtn.style.display = 'none';
   }
-
-  const preloadImg = new Image();
-  preloadImg.src = `img/${input}.jpg`;
-
-  preloadImg.onload = () => {
-    img.src = preloadImg.src;
-    if (document.fonts && document.fonts.ready) {
-      document.fonts.ready.then(startAnimation);
-    } else {
-      setTimeout(startAnimation, 100);
-    }
-  };
-
-  preloadImg.onerror = () => {
-    img.src = preloadImg.src;
-    startAnimation();
-  };
 
   function startAnimation() {
     const elements = [img, title, body, closing];
@@ -161,6 +144,42 @@ function showFlower(date) {
         });
       }, delay * index);
     });
+  }
+
+  function handleReady(src) {
+    img.src = src;
+    if (document.fonts && document.fonts.ready) {
+      document.fonts.ready.then(startAnimation);
+    } else {
+      setTimeout(startAnimation, 100);
+    }
+  }
+
+  const preloadImg = new Image();
+  let settled = false;
+
+  // ✅ onload/onerror를 src 지정보다 먼저 등록
+  preloadImg.onload = () => {
+    if (settled) return;
+    settled = true;
+    handleReady(preloadImg.src);
+  };
+  preloadImg.onerror = () => {
+    if (settled) return;
+    settled = true;
+    img.src = preloadImg.src;
+    startAnimation();
+  };
+
+  preloadImg.src = `img/${input}.jpg`;
+
+  // ✅ 캐시 히트로 이벤트가 씹혔을 경우를 대비한 안전장치
+  if (preloadImg.complete) {
+    if (preloadImg.naturalWidth > 0) {
+      if (!settled) { settled = true; handleReady(preloadImg.src); }
+    } else {
+      if (!settled) { settled = true; img.src = preloadImg.src; startAnimation(); }
+    }
   }
 }
 
