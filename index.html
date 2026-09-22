@@ -24,17 +24,33 @@
 <link rel="shortcut icon" href="/favicon.ico" />
 <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
 <link rel="manifest" href="/site.webmanifest" />
+
+  
+  
 </head>
+
 
 <body class="main-bg">
   <!-- 1 메인 -->
   <div id="mainPage">
-    <div id="message">당신의 탄생화는 무엇인가요?</div>
+    <!--<a href="https://site.tagme.my/messymute">-->
+    <!--  <svg id="logo" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 33.55 32.6" width="30" height="30" style="cursor:pointer;">-->
+    <!--    <g>-->
+    <!--      <path class="cls-1" d="M5.86,5.58v21.43h21.82V5.58H5.86ZM25.29,24.6H8.26V7.98h17.02v16.62Z"/>-->
+    <!--      <rect class="cls-1" x="31.15" y="3.17" width="2.4" height="26.22"/>-->
+    <!--      <rect class="cls-1" y="3.17" width="2.4" height="26.22"/>-->
+    <!--      <rect class="cls-1" x="3.28" y="30.3" width="27" height="2.3"/>-->
+    <!--      <rect class="cls-1" x="3.28" width="27" height="2.3"/>-->
+    <!--    </g>-->
+    <!--  </svg>-->
+    <!--</a>-->
+
+    <div id="message">자네의 탄생화는 무엇인가요?</div>
     <input type="text" id="dateInput" placeholder="생일을 입력해주세요 ex) 0123" class="custom-input">
     <button id="confirmBtn">enter</button>
   </div>
 
-  <!-- 2 상-세 -->
+  <!-- 2 상세 -->
   <div id="detailPage" style="display:none;">
     <img id="flowerImage" src="">
     <div class="textBox">
@@ -59,15 +75,19 @@
 let flowerData = [];
 
 window.onload = () => {
+  // JSON 불러오기
   fetch('flowers.json')
     .then(response => response.json())
     .then(data => { flowerData = data; });
 
+  // 버튼 이벤트 연결
   document.getElementById('confirmBtn').addEventListener('click', () => showFlower());
   document.getElementById('goMainBtn1').addEventListener('click', goMain);
   document.getElementById('goMainBtn2').addEventListener('click', goMain);
   document.getElementById('goGalleryBtn').addEventListener('click', showGallery);
 };
+
+// 상세 페이지 표시
 
 function showFlower(date) {
   const input = date || document.getElementById('dateInput').value.trim();
@@ -88,7 +108,7 @@ function showFlower(date) {
   const title = document.getElementById('flowerTitle');
   const body = document.getElementById('flowerBody');
   const closing = document.getElementById('flowerClosing');
-  const linkBtn = document.getElementById('goLinkBtn');
+  const linkBtn = document.getElementById('goLinkBtn'); // ✅ 새 버튼
 
   [img, title, body, closing].forEach(el => {
     el.classList.remove('enter');
@@ -102,9 +122,9 @@ function showFlower(date) {
 
     if (data.link) {
       linkBtn.style.display = 'inline-block';
-      linkBtn.onclick = () => window.open(data.link, '_blank');
+      linkBtn.onclick = () => window.open(data.link, '_blank'); // ✅ 새 탭에서 열기
     } else {
-      linkBtn.style.display = 'none';
+      linkBtn.style.display = 'none'; // 링크 없으면 숨김
     }
   } else {
     title.textContent = "해당 날짜의 꽃 설명이 없습니다.";
@@ -112,6 +132,23 @@ function showFlower(date) {
     closing.textContent = "";
     linkBtn.style.display = 'none';
   }
+
+  const preloadImg = new Image();
+  preloadImg.src = `img/${input}.jpg`;
+
+  preloadImg.onload = () => {
+    img.src = preloadImg.src;
+    if (document.fonts && document.fonts.ready) {
+      document.fonts.ready.then(startAnimation);
+    } else {
+      setTimeout(startAnimation, 100);
+    }
+  };
+
+  preloadImg.onerror = () => {
+    img.src = preloadImg.src;
+    startAnimation();
+  };
 
   function startAnimation() {
     const elements = [img, title, body, closing];
@@ -125,41 +162,78 @@ function showFlower(date) {
       }, delay * index);
     });
   }
-
-  function handleReady(src) {
-    img.src = src;
-    if (document.fonts && document.fonts.ready) {
-      document.fonts.ready.then(startAnimation);
-    } else {
-      setTimeout(startAnimation, 100);
-    }
-  }
-
-  const preloadImg = new Image();
-  let settled = false;
-
-  preloadImg.onload = () => {
-    if (settled) return;
-    settled = true;
-    handleReady(preloadImg.src);
-  };
-  preloadImg.onerror = () => {
-    if (settled) return;
-    settled = true;
-    img.src = preloadImg.src;
-    startAnimation();
-  };
-
-  preloadImg.src = `img/${input}.jpg`;
-
-  if (preloadImg.complete) {
-    if (preloadImg.naturalWidth > 0) {
-      if (!settled) { settled = true; handleReady(preloadImg.src); }
-    } else {
-      if (!settled) { settled = true; img.src = preloadImg.src; startAnimation(); }
-    }
-  }
 }
+
+
+// function showFlower(date) {
+//   const input = date || document.getElementById('dateInput').value.trim();
+//   if (!/^\d{4}$/.test(input)) {
+//     alert("날짜 형식이 올바르지 않습니다. 예: 0103");
+//     return;
+//   }
+
+//   const data = flowerData.find(f => f.date === input);
+
+//   // 페이지 전환
+//   document.getElementById('mainPage').style.display = 'none';
+//   document.getElementById('galleryPage').style.display = 'none';
+//   document.getElementById('detailPage').style.display = '';
+//   document.body.className = 'detail-bg';
+//   window.scrollTo(0, 0);
+
+//   const img = document.getElementById('flowerImage');
+//   const title = document.getElementById('flowerTitle');
+//   const body = document.getElementById('flowerBody');
+//   const closing = document.getElementById('flowerClosing');
+
+//   [img, title, body, closing].forEach(el => {
+//     el.classList.remove('enter');
+//     el.classList.add('hidden');
+//   });
+
+//   if (data) {
+//     title.textContent = data.title;
+//     body.textContent = data.body;
+//     closing.textContent = data.closing;
+//   } else {
+//     title.textContent = "해당 날짜의 꽃 설명이 없습니다.";
+//     body.textContent = "";
+//     closing.textContent = "";
+//   }
+
+//   const preloadImg = new Image();
+//   preloadImg.src = `img/${input}.jpg`;
+
+//   preloadImg.onload = () => {
+//     img.src = preloadImg.src;
+//     if (document.fonts && document.fonts.ready) {
+//       document.fonts.ready.then(startAnimation);
+//     } else {
+//       setTimeout(startAnimation, 100);
+//     }
+//   };
+
+//   preloadImg.onerror = () => {
+//     img.src = preloadImg.src;
+//     startAnimation();
+//   };
+
+//   function startAnimation() {
+//     const elements = [img, title, body, closing];
+//     const delay = 250;
+//     elements.forEach((el, index) => {
+//       setTimeout(() => {
+//         requestAnimationFrame(() => {
+//           el.classList.remove('hidden');
+//           el.classList.add('enter');
+//         });
+//       }, delay * index);
+//     });
+//   }
+// }
+
+
+
 
 // 갤러리 페이지 표시
 function showGallery() {
@@ -177,31 +251,12 @@ function showGallery() {
     thumb.src = `img/thumb/${f.date}.jpg`;
     thumb.alt = f.date;
     thumb.loading = 'lazy';
-    thumb.setAttribute('role', 'button');
-    thumb.setAttribute('tabindex', '0');
-
-    // iOS Safari에서 img의 click 이벤트가 누락되는 경우를 대비해
-    // touchend도 함께 처리합니다. 짧은 시간 내 중복 실행은 방지합니다.
-    let lastActivation = 0;
-    const activateThumb = (event) => {
-      const now = Date.now();
-      if (now - lastActivation < 500) return;
-      lastActivation = now;
-      if (event.type === 'touchend') event.preventDefault();
-      showFlower(f.date);
-    };
-    thumb.addEventListener('click', activateThumb);
-    thumb.addEventListener('touchend', activateThumb, { passive: false });
-    thumb.addEventListener('keydown', (event) => {
-      if (event.key === 'Enter' || event.key === ' ') {
-        event.preventDefault();
-        activateThumb(event);
-      }
-    });
-
+    thumb.onclick = () => showFlower(f.date);
+  
     thumb.classList.remove('enter');
     grid.appendChild(thumb);
-
+  
+    // 이미지가 로드된 후에 애니메이션 클래스 추가
     thumb.onload = () => {
       setTimeout(() => {
         thumb.classList.add('enter');
@@ -210,6 +265,7 @@ function showGallery() {
   });
 }
 
+// 메인 페이지로 돌아가기
 function goMain() {
   document.getElementById('detailPage').style.display = 'none';
   document.getElementById('galleryPage').style.display = 'none';
@@ -221,3 +277,4 @@ function goMain() {
 </script>
 </body>
 </html>
+
