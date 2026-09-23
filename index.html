@@ -68,7 +68,13 @@ window.onload = () => {
   // JSON 불러오기
   fetch('flowers.json')
     .then(response => response.json())
-    .then(data => { flowerData = data; });
+    .then(data => {
+      flowerData = data;
+      console.log('[DEBUG] flowers.json 로드 완료, 항목 수:', data.length);
+    })
+    .catch(err => {
+      console.error('[DEBUG] flowers.json 로드/파싱 실패:', err);
+    });
 
   // 버튼 이벤트 연결
   document.getElementById('confirmBtn').addEventListener('click', () => showFlower());
@@ -172,12 +178,26 @@ function showGallery() {
       thumb.alt = f.date;
       thumb.loading = 'lazy';
       thumb.onclick = () => {
+        console.log('[DEBUG] 썸네일 click 이벤트 발생:', f.date);
         galleryScrollY = window.scrollY;
         showFlower(f.date);
       };
 
+      // [DEBUG] click이 씹히는지, touch 이벤트 자체는 도달하는지 확인용
+      thumb.addEventListener('touchstart', () => {
+        console.log('[DEBUG] 썸네일 touchstart:', f.date);
+      });
+      thumb.addEventListener('touchend', () => {
+        console.log('[DEBUG] 썸네일 touchend:', f.date);
+      });
+
       thumb.classList.remove('enter');
       grid.appendChild(thumb);
+
+      // [DEBUG] onload 등록 전에 이미 로드가 끝나있으면(캐시 히트) 이벤트를 놓쳤을 수 있음
+      if (thumb.complete) {
+        console.log('[DEBUG] onload 등록 전 이미 로드완료(캐시 히트 가능성):', f.date);
+      }
 
       // 이미지가 로드된 후에 애니메이션 클래스 추가
       thumb.onload = () => {
