@@ -61,6 +61,8 @@
 
 <script>
 let flowerData = [];
+let galleryBuilt = false;
+let galleryScrollY = 0;
 
 window.onload = () => {
   // JSON 불러오기
@@ -160,34 +162,47 @@ function showGallery() {
   document.getElementById('detailPage').style.display = 'none';
   document.getElementById('galleryPage').style.display = 'block';
   document.body.className = 'gallery-bg';
-  window.scrollTo(0, 0);
 
   const grid = document.getElementById('galleryGrid');
-  grid.innerHTML = '';
 
-  flowerData.forEach((f, index) => {
-    const thumb = document.createElement('img');
-    thumb.src = `img/thumb/${f.date}.jpg`;
-    thumb.alt = f.date;
-    thumb.loading = 'lazy';
-    thumb.onclick = () => showFlower(f.date);
-  
-    thumb.classList.remove('enter');
-    grid.appendChild(thumb);
-  
-    // 이미지가 로드된 후에 애니메이션 클래스 추가
-    thumb.onload = () => {
-      setTimeout(() => {
-        thumb.classList.add('enter');
-      }, 40 + index * 40);
-    };
-  });
+  if (!galleryBuilt) {
+    flowerData.forEach((f, index) => {
+      const thumb = document.createElement('img');
+      thumb.src = `img/thumb/${f.date}.jpg`;
+      thumb.alt = f.date;
+      thumb.loading = 'lazy';
+      thumb.onclick = () => {
+        galleryScrollY = window.scrollY;
+        showFlower(f.date);
+      };
+
+      thumb.classList.remove('enter');
+      grid.appendChild(thumb);
+
+      // 이미지가 로드된 후에 애니메이션 클래스 추가
+      thumb.onload = () => {
+        setTimeout(() => {
+          thumb.classList.add('enter');
+        }, 40 + index * 40);
+      };
+    });
+    galleryBuilt = true;
+    window.scrollTo(0, 0);
+  } else {
+    // 이전에 보던 스크롤 위치로 복원
+    window.scrollTo(0, galleryScrollY);
+  }
 }
 
 // 메인 페이지로 돌아가기
 function goMain() {
+  const galleryPage = document.getElementById('galleryPage');
+  if (galleryPage.style.display !== 'none') {
+    galleryScrollY = window.scrollY;
+  }
+
   document.getElementById('detailPage').style.display = 'none';
-  document.getElementById('galleryPage').style.display = 'none';
+  galleryPage.style.display = 'none';
   document.getElementById('mainPage').style.display = '';
   document.body.className = 'main-bg';
   document.getElementById('dateInput').value = '';
