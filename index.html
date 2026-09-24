@@ -167,15 +167,33 @@ function showGallery() {
   const grid = document.getElementById('galleryGrid');
 
   if (!galleryBuilt) {
+    // [DEBUG] 몇 번째 시도에서 실제로 탭이 성공했는지 세기 위한 카운터
+    window.__debugTapAttempts = 0;
+
     flowerData.forEach((f, index) => {
       const thumb = document.createElement('img');
       thumb.src = `img/thumb/${f.date}.jpg`;
       thumb.alt = f.date;
       thumb.loading = 'lazy';
       thumb.onclick = () => {
+        window.__debugTapAttempts++;
+        console.log('[DEBUG] click 이벤트 발생 (누적 시도 ' + window.__debugTapAttempts + '번째):', f.date, 'readyState:', document.readyState);
         galleryScrollY = window.scrollY;
         showFlower(f.date);
       };
+
+      // [DEBUG] touch가 오는지, 탭한 좌표에 실제로 어떤 요소가 잡히는지 확인
+      thumb.addEventListener('touchstart', (e) => {
+        window.__debugTapAttempts++;
+        const t = e.touches[0];
+        const hitEl = t ? document.elementFromPoint(t.clientX, t.clientY) : null;
+        console.log('[DEBUG] touchstart (누적 시도 ' + window.__debugTapAttempts + '번째):', f.date,
+          '/ 실제 탭 좌표에 잡힌 요소:', hitEl ? (hitEl.tagName + (hitEl.alt ? '[alt=' + hitEl.alt + ']' : '')) : 'null',
+          '/ 이 썸네일과 동일?', hitEl === thumb);
+      }, { passive: true });
+      thumb.addEventListener('touchend', () => {
+        console.log('[DEBUG] touchend:', f.date);
+      }, { passive: true });
 
       thumb.classList.remove('enter');
       grid.appendChild(thumb);
