@@ -1,15 +1,14 @@
-
 @font-face {
   font-family: 'Tasan Regular';
   src: url('fonts/Tasan Regular.otf') format('opentype');
   font-weight: normal;
   font-style: normal;
-  
+
 }
 
 
-button, img, svg { /* 탭 하이라이트 제거 */
-  -webkit-tap-highlight-color: transparent; 
+button, img, svg, a { /* 탭 하이라이트 제거 */
+  -webkit-tap-highlight-color: transparent;
 }
 
 ::selection {
@@ -25,18 +24,18 @@ body {
   margin: 0;
   padding: 0px;
   text-align: center;
-  background-color: #000; 
+  background-color: #000;
    overflow-x: hidden;
 }
 
-body.main-bg { 
-  background-color: #000; 
+body.main-bg {
+  background-color: #000;
   }
-body.detail-bg { 
-  background-color: #fff; 
+body.detail-bg {
+  background-color: #fff;
   }
-body.gallery-bg { 
-  background-color: #000; 
+body.gallery-bg {
+  background-color: #000;
   }
 
 
@@ -44,11 +43,11 @@ body.gallery-bg {
 
 /* 1. 메인페이지 메인페이지 메인페이지 메인페이지 메인페이지 메인페이지 메인페이지 메인페이지 메인페이지*/
 
-#mainPage {  
+#mainPage {
   display: flex;
-  flex-direction: column; 
-  align-items: center;     
-  justify-content: center;  
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
   min-height: 100vh;
 }
 
@@ -58,7 +57,7 @@ body.gallery-bg {
 
 #message {
   margin-top: 60px;
-  
+
   font-family: 'Tasan Regular', sans-serif;
   font-size: 1.5em;
   color: #eee;
@@ -72,12 +71,12 @@ body.gallery-bg {
 
   border: 0;
   outline: none;
-  
+
   font-family: 'Tasan Regular', sans-serif;
   text-align: center;
   font-size: 1.2em;
   letter-spacing: 0.6em;
-  
+
   color: #000;
   background-color: #ccc
 }
@@ -94,25 +93,25 @@ body.gallery-bg {
   display: block;
   margin-top: 40px;
   padding: 6px 20px 4px;
-  
+
   border: none;
-  
+
   background-color:#fff;
   color: #000;
-  
+
   font-family: 'Tasan Regular', sans-serif;
   font-size: 1.3em;
 
   cursor: pointer;
   transition: background-color 0.2s ease;
   transition: color 0.2 eases;
-  
+
 }
 
 #confirmBtn:hover {
   background-color: #222;
   color: #fff;
-} 
+}
 
 
 
@@ -123,24 +122,24 @@ body.gallery-bg {
 
 #detailPage {
   margin: 0px 200px 0px;
-  
+
   color: #000;
   display: flex;
   flex-direction: row;
   align-items: flex-start;
 
   justify-content: center;
-  padding: 0;        
+  padding: 0;
 
 }
 
 #flowerImage {
   height: 100vh;
   border-right: 1px solid #777;
-  
+
   background-color: #000;
   color: #000;
-  
+
 }
 
 
@@ -161,23 +160,23 @@ body.gallery-bg {
 #flowerBody {
   margin: 20px 160px 0px 0px;
   padding: 0px 0px;
-  
+
   font-family: "source-han-sans-korean", sans-serif;
   font-weight: 400;
-  
+
   font-size: 1em;
   letter-spacing: -0.05em;
   line-height: 1.9;
   text-align: left;
   word-break: keep-all;
-  
+
   color: #111;
-  
+
 }
 
 #flowerClosing {
     margin: 40px 0px 0px;
-    
+
     font-size: 1em;
     font-family: "source-han-sans-korean", sans-serif;
     font-weight: 700;
@@ -193,18 +192,20 @@ body.gallery-bg {
   display: flex;
   gap: 16px;
   justify-content: flex-start;
-  
+
 }
 
 #goGalleryBtn {
+  display: inline-block;
+  text-decoration: none;
 
   padding: 6px 20px 4px;
-  
+
   border: none;
-  
+
   background-color:#000;
   color: #eee;
-  
+
   font-family: 'Tasan Regular', sans-serif;
   font-size: 1.3em;
 
@@ -220,14 +221,16 @@ body.gallery-bg {
 }
 
 #goMainBtn1 {
+  display: inline-block;
+  text-decoration: none;
 
   padding: 6px 20px 4px;
-  
+
   border: none;
-  
+
   background-color:#000;
   color: #eee;
-  
+
   font-family: 'Tasan Regular', sans-serif;
   font-size: 1.3em;
 
@@ -242,13 +245,16 @@ body.gallery-bg {
 }
 
 #goLinkBtn {
+  display: inline-block;
+  text-decoration: none;
+
   padding: 6px 20px 4px;
-  
+
   border: none;
-  
+
   background-color:#000;
   color: #eee;
-  
+
   font-family: 'Tasan Regular', sans-serif;
   font-size: 1.3em;
 
@@ -274,53 +280,59 @@ body.gallery-bg {
   justify-content: center;
 }
 
+@keyframes thumbFadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
 
-.gallery-grid img {
+.gallery-grid a {
+  display: block;
   width: calc(100% / 6 - 12px);
   cursor: pointer;
-  /*transition: opacity 0.3s ease;*/
+  text-decoration: none;
 
   opacity: 0;
-  /*transform: translateY(22px);*/
-  transition: opacity 0.4s ease, transform 0.4s ease;
-  will-change: opacity, transform;
+  animation: thumbFadeIn 0.4s ease forwards;
 
   /* iOS Safari가 연속 탭을 더블탭(확대) 제스처로 오인해 click을 씹는 것을 방지 */
   touch-action: manipulation;
   -webkit-tap-highlight-color: transparent;
 }
 
-.gallery-grid img.enter {
-  opacity: 1;
-  /*transform: translateY(0);*/
+.gallery-grid img {
+  display: block;
+  width: 100%;
 }
 
 
 @media (min-width: 768px) {
-  .gallery-grid img:hover {
+  .gallery-grid a:hover img {
     opacity: 0.85;
   }
 }
 
 
 #goMainBtn2 {
+  display: inline-block;
+  text-decoration: none;
+
   position: fixed;
   top: 40px;
   margin: 0px auto;
   transform: translateX(-50%);
   left: 50%;
   z-index: 1000;
-  
+
   padding: 6px 20px 4px;
-  
+
   border: none;
-  
+
   background-color: #eee;
   color: #000;
-  
+
   font-size: 1.3em;
   font-family: 'Tasan Regular', sans-serif;
-  
+
   cursor: pointer;
   transition: background-color 0.2s ease;
   transition: color 0.2s ease;
@@ -344,13 +356,13 @@ body.gallery-bg {
       margin: 0px;
       padding: 0px;
     }
-  
+
   /*1.메인페이지 (모바일)*/
-    
-    #mainPage {  
+
+    #mainPage {
       min-height: 70vh;
     }
-    
+
     #message {
       font-size: 1.4em;
     }
@@ -367,116 +379,116 @@ body.gallery-bg {
       font-size: 1em;
       letter-spacing: 0px;
     }
-    
+
     #confirmBtn {
       margin-top: 32px;
-      
+
       padding: 6px 20px 4px;
       width: auto;
       font-size: 1.1em;
-      
+
     }
-    
-   
-    
-    
+
+
+
+
   /*2.상세페이지 (모바일)  */
-    
-  
+
+
     #detailPage {
       color: #000;
       margin: 0;
       display: flex;
       flex-direction: column;
       align-items: center;
-      
+
       overflow-x: hidden;
     }
-   
-    body.detail-bg { 
-      background-color: #fff; 
+
+    body.detail-bg {
+      background-color: #fff;
     }
-  
+
     #flowerImage {
-      width: 100%;          
+      width: 100%;
       max-width: 100%;
       height: auto;
       margin: 10px 0px 0px;
-      
+
     }
-    
+
     .textBox{
       margin: 0px;
     }
-    
+
     #flowerTitle {
       margin: 34px 0px 0px;
-      
+
       text-align: center;
       font-size: 0.9em;
     }
-  
+
     #flowerBody {
       margin: 16px 0px 0px;
       padding: 0px 25px;
-      
+
       font-size: 0.9em;
       letter-spacing: -0.05em;
       line-height: 1.8;
       text-align: justify;
       word-break: break-all;
-      
+
     }
-  
+
     #flowerClosing {
       margin: 34px 0px 0px;
       font-size: 0.9em;
       text-align: center;
     }
-  
-  
+
+
     #btnBox {
       margin: 0px auto;
       margin-top: 70px;
       margin-bottom: 80px;
-      
+
       display: flex;
       gap: 12px;
       justify-content: center;
-  
-    }  
-  
+
+    }
+
     #goGalleryBtn {
       padding: 6px 20px 4px;
       font-size: 1.1em;
     }
-    
+
     #goMainBtn1 {
       padding: 6px 20px 4px;
       font-size: 1.1em;
     }
-    
+
     #goLinkBtn {
       padding: 6px 20px 4px;
       font-size: 1.1em;
     }
 
 
-  
+
   /*3. 갤러리페이지 (모바일)*/
-  
+
     .gallery-grid {
       margin-top: 96px;
       margin-left: 0px;
       margin-right: 0px;
     }
-  
-    .gallery-grid img {
+
+    .gallery-grid a {
       width: calc(100% / 3 - 4px);
     }
-    
 
-  
+
+
     #goMainBtn2 {
     position: fixed;
     top: 24px;
@@ -484,50 +496,52 @@ body.gallery-bg {
     transform: translateX(-50%);
     left: 50%;
     z-index: 1000;
-    
+
     padding: 6px 20px 4px;
     width: auto;
-    
+
     border: none;
-    
+
     background-color: #eee;
     color: #000;
-    
+
     font-size: 1.1em;
     font-family: 'Tasan Regular', sans-serif;
-    
+
     cursor: pointer;
   }
-  
+
     #goGalleryBtn2:active {
     background-color: #000;
     color: #eee;
   }
-    
-    
+
+
 }
 
 
 
 
 /*애니메이션*/
-/* 디테일 페이지 공통 초기 상태 */
+/* 디테일 페이지: 실제 페이지 로드 시 CSS만으로 순차 페이드인 (JS 불필요) */
+@keyframes detailFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(22px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 #detailPage img,
 #detailPage p {
   opacity: 0;
-  transform: translateY(22px);
-  transition: opacity 0.8s ease, transform 0.8s ease;
-  will-change: opacity, transform;
-  
-  -webkit-transform: translateY(22px);
-  -webkit-transition: opacity 0.8s ease, -webkit-transform 0.8s ease;
+  animation: detailFadeIn 0.8s ease forwards;
 }
 
-/* 애니메이션 적용 상태 */
-#detailPage img.enter,
-#detailPage p.enter {
-  opacity: 1;
-  transform: translateY(0);
-  -webkit-transform: translateY(0);
-
-}
+#flowerImage   { animation-delay: 0ms; }
+#flowerTitle   { animation-delay: 250ms; }
+#flowerBody    { animation-delay: 500ms; }
+#flowerClosing { animation-delay: 750ms; }
