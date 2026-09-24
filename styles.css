@@ -279,13 +279,15 @@ body.gallery-bg {
   width: calc(100% / 6 - 12px);
   cursor: pointer;
   /*transition: opacity 0.3s ease;*/
-  
+
   opacity: 0;
   /*transform: translateY(22px);*/
   transition: opacity 0.4s ease, transform 0.4s ease;
   will-change: opacity, transform;
 
-  
+  /* iOS Safari가 연속 탭을 더블탭(확대) 제스처로 오인해 click을 씹는 것을 방지 */
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
 }
 
 .gallery-grid img.enter {
