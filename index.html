@@ -94,22 +94,23 @@ function showFlower(date) {
 
   const data = flowerData.find(f => f.date === input);
 
+  const img = document.getElementById('flowerImage');
+  const title = document.getElementById('flowerTitle');
+  const body = document.getElementById('flowerBody');
+  const closing = document.getElementById('flowerClosing');
+  const linkBtn = document.getElementById('goLinkBtn'); //
+
+  // 이전에 보던 상세페이지 내용이 화면에 노출되기 전에 먼저 숨김 처리
+  [img, title, body, closing].forEach(el => {
+    el.classList.remove('enter');
+    el.classList.add('hidden');
+  });
+
   document.getElementById('mainPage').style.display = 'none';
   document.getElementById('galleryPage').style.display = 'none';
   document.getElementById('detailPage').style.display = '';
   document.body.className = 'detail-bg';
   window.scrollTo(0, 0);
-
-  const img = document.getElementById('flowerImage');
-  const title = document.getElementById('flowerTitle');
-  const body = document.getElementById('flowerBody');
-  const closing = document.getElementById('flowerClosing');
-  const linkBtn = document.getElementById('goLinkBtn'); // 
-
-  [img, title, body, closing].forEach(el => {
-    el.classList.remove('enter');
-    el.classList.add('hidden');
-  });
 
   if (data) {
     title.textContent = data.title;
